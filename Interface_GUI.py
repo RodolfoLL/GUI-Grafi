@@ -84,6 +84,38 @@ class BresenhamCanvas(Canvas):
                     p = p + incNE
                 self.draw_point(x, y, color=color)
 
+    def draw_point_circle(self, xc, yc, x, y):
+        self.create_rectangle((xc+x, yc+y)*2, outline="blue")
+        self.create_rectangle((xc-x, yc+y)*2, outline="blue")
+        self.create_rectangle((xc+x, yc-y)*2, outline="blue")
+        self.create_rectangle((xc-x, yc-y)*2, outline="blue")
+        self.create_rectangle((xc+y, yc+x)*2, outline="blue")
+        self.create_rectangle((xc-y, yc+x)*2, outline="blue")
+        self.create_rectangle((xc+y, yc-x)*2, outline="blue")
+        self.create_rectangle((xc-y, yc-x)*2, outline="blue")
+
+    def circlebress(self, xc, yc, r):
+        x = 0
+        y = r
+        d = 3 - 2 * r
+        self.draw_point_circle(xc, yc, x, y)
+        while y >= x:
+            x = x + 1
+            if d > 0:
+                y = y - 1
+                d = d + 4 * (x - y) + 10
+            else:
+                d = d + 4 * x + 6
+            self.draw_point_circle(xc, yc, x, y)
+
+
+def draw_circle():
+    canvas.delete('all')
+    setpoint_circle()
+    canvas.bind("<Button-1>", press_button_mouse)
+    canvas.pack(side=LEFT)
+    canvas.circlebress(x0, y0, 50)
+
 
 def drawsquare():
     canvas.delete('all')
@@ -108,6 +140,12 @@ def press_button_mouse(event):
     canvas.create_oval(event.x-5, event.y-5, event.x+5, event.y+5, fill="red")
 
 
+def setpoint_circle():
+    global x0, y0
+    x0 = puntosx[0]
+    y0 = puntosy[0]
+
+
 def setpoints_square():
     global x0, y0, x1, y1
     x0 = puntosx[0]
@@ -128,9 +166,10 @@ def setpoints_triangle():
 
 def savefile():
     file = filedialog.asksaveasfilename(initialdir="C:/",
-                                        filetypes=(('PNG File', '.PNG'), ('PNG File', '.PNG')))
+                                        filetypes=(('PNG File', '.PNG'), ('PNG File', '.PNG'), ('JPEG File', '.JPEG'), ('JPEG File', '.JPEG')))
     file = file + ".PNG"
-    ImageGrab.grab().crop((150, 150, 500, 500)).save(file)
+    # ImageGrab.grab().crop((x0-250, y0-250, 600, 600)).save(file)
+    ImageGrab.grab().crop((500-x0, 700-y0, 500, 700)).save(file)
 
 
 # def mouse_move(event):
@@ -162,7 +201,7 @@ def create_buttons():
     buton_triangle.place(x=540, y=200)
 
     buton_circle = Button(window, text="Circle",
-                          font=("Comic Sans", 15), width=10)
+                          font=("Comic Sans", 15), width=10, command=draw_circle)
     buton_circle.place(x=540, y=250)
 
     # button_save = Button(window, text="Save",

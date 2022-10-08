@@ -31,11 +31,38 @@ class BresenhamCanvas(Canvas):
                 self.draw_point(x, y, color=color)
 
 
+class CircleBresenham(Canvas):
+    def draw_point_circle(self, xc, yc, x, y):
+        self.create_rectangle((xc+x, yc+y)*2, outline="blue")
+        self.create_rectangle((xc-x, yc+y)*2, outline="blue")
+        self.create_rectangle((xc+x, yc-y)*2, outline="blue")
+        self.create_rectangle((xc-x, yc-y)*2, outline="blue")
+        self.create_rectangle((xc+y, yc+x)*2, outline="blue")
+        self.create_rectangle((xc-y, yc+x)*2, outline="blue")
+        self.create_rectangle((xc+y, yc-x)*2, outline="blue")
+        self.create_rectangle((xc-y, yc-x)*2, outline="blue")
+
+    def circlebress(self, xc, yc, r):
+        x = 0
+        y = r
+        d = 3 - 2 * r
+        self.draw_point_circle(xc, yc, x, y)
+        while y >= x:
+            x = x + 1
+            if d > 0:
+                y = y - 1
+                d = d + 4 * (x - y) + 10
+            else:
+                d = d + 4 * x + 6
+            self.draw_point_circle(xc, yc, x, y)
+
+
 if __name__ == "__main__":
     CANVAS_SIZE = 600
     root = Tk()
-    canvas = BresenhamCanvas(root, width=CANVAS_SIZE, height=CANVAS_SIZE)
+    canvas = CircleBresenham(root, width=CANVAS_SIZE, height=CANVAS_SIZE)
     canvas.pack()
-    canvas.draw_line(100, 100, 200, 100, color="blue")
-    canvas.draw_line(200, 100, 300, 350, color="blue")
+    # canvas.draw_line(100, 100, 200, 100, color="blue")
+    # canvas.draw_line(200, 100, 300, 350, color="blue")
+    canvas.circlebress(400, 300, 100)
     root.mainloop()
