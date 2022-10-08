@@ -8,41 +8,6 @@ class BresenhamCanvas(Canvas):
     def draw_point(self, x, y, color="red"):
         self.create_line(x, y, x+1, y+1, fill=color, width=2)
 
-    # def draw_line(self, x0, y0, x1, y1, color="red"):
-    #     dx = abs(x1-x0)
-    #     dy = abs(y1-y0)
-    #     p = 2*dy-dx if dx > dy else 2*dx-dy
-    #     incE = 2*dy if dx > dy else 2*dx
-    #     incNE = 2*(dy-dx) if dx > dy else 2*(dx-dy)
-    #     if (x0 > x1) or (y0 > y1):
-    #         x, y = x1, y1
-    #         xend, yend = x0, y0
-    #     else:
-    #         x, y = x0, y0
-    #         xend, yend = x1, y1
-    #     if dx > dy:
-    #         start = x
-    #         end = xend
-    #     else:
-    #         start = y
-    #         end = yend
-
-    #     self.draw_point(x, y, color=color)
-    #     for i in range(start, end):
-    #         if dx > dy:
-    #             x = x+1 if x < x1 else x-1
-    #         else:
-    #             y = y+1 if y < y1 else y-1
-    #         if p < 0:
-    #             p += incE
-    #         else:
-    #             if dx > dy:
-    #                 y = y+1 if y < y1 else y-1
-    #             else:
-    #                 x = x+1 if x < x1 else x-1
-    #             p += incNE
-
-    #         self.draw_point(x, y, color=color)
     def draw_line(self, x0, y0, x1, y1, color="red"):
         dx = (x1-x0)
         dy = (y1-y0)
@@ -168,12 +133,7 @@ def savefile():
     file = filedialog.asksaveasfilename(initialdir="C:/",
                                         filetypes=(('PNG File', '.PNG'), ('PNG File', '.PNG'), ('JPEG File', '.JPEG'), ('JPEG File', '.JPEG')))
     file = file + ".PNG"
-    # ImageGrab.grab().crop((x0-250, y0-250, 600, 600)).save(file)
-    ImageGrab.grab().crop((500-x0, 700-y0, 500, 700)).save(file)
-
-
-# def mouse_move(event):
-#     window.title(str(event.x)+'-'+str(event.y))
+    ImageGrab.grab().crop((x0-250, y0-250, 600, 600)).save(file)
 
 
 def clear_canvas():
@@ -204,9 +164,6 @@ def create_buttons():
                           font=("Comic Sans", 15), width=10, command=draw_circle)
     buton_circle.place(x=540, y=250)
 
-    # button_save = Button(window, text="Save",
-    #                      font=("Comic Sans", 15), width=10, command=savefile)
-    # button_save.place(x=540, y=300)
     button_close = Button(window, text="Close",
                           font=("Comic Sans", 15), width=10, command=window.destroy)
     button_close.place(x=540, y=600)
@@ -215,7 +172,6 @@ def create_buttons():
 def create_canvas():
     global canvas
     canvas = BresenhamCanvas(frame, width=500, height=700)
-    # canvas.bind("<Motion>", mouse_move)
     canvas.bind("<Button-1>", press_button_mouse)
     canvas.pack(side=LEFT)
 
