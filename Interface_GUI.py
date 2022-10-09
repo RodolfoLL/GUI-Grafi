@@ -8,6 +8,42 @@ class BresenhamCanvas(Canvas):
     def draw_point(self, x, y, color="red"):
         self.create_line(x, y, x+1, y+1, fill=color, width=2)
 
+    # def draw_line(self, x0, y0, x1, y1, color="red"):
+    #     dx = abs(x1-x0)
+    #     dy = abs(y1-y0)
+    #     p = 2*dy-dx if dx > dy else 2*dx-dy
+    #     incE = 2*dy if dx > dy else 2*dx
+    #     incNE = 2*(dy-dx) if dx > dy else 2*(dx-dy)
+    #     if (x0 > x1) and (y0 > y1):
+    #         x, y = x1, y1
+    #         xend, yend = x0, y0
+    #     else:
+    #         x, y = x0, y0
+    #         xend, yend = x1, y1
+    #     if dx > dy:
+    #         start = x
+    #         end = xend
+    #     else:
+    #         start = y
+    #         end = yend
+
+    #     self.draw_point(x, y, color=color)
+    #     for i in range(start, end):
+    #         if dx > dy:
+    #             x = x+1 if x < x1 else x-1
+    #         else:
+    #             y = y+1 if y < y1 else y-1
+    #         if p < 0:
+    #             p += incE
+    #         else:
+    #             if dx > dy:
+    #                 y = y+1 if y < y1 else y-1
+    #             else:
+    #                 x = x+1 if x < x1 else x-1
+    #             p += incNE
+
+    #         self.draw_point(x, y, color=color)
+
     def draw_line(self, x0, y0, x1, y1, color="red"):
         dx = (x1-x0)
         dy = (y1-y0)
@@ -73,6 +109,35 @@ class BresenhamCanvas(Canvas):
                 d = d + 4 * x + 6
             self.draw_point_circle(xc, yc, x, y)
 
+    # def draw_circunf(self, xc, yc, radio, color):
+    #     x = 0
+    #     y = radio
+    #     p = 1 - radio
+    #     self.draw_point(xc+x, yc+y, color)
+    #     self.draw_point(xc+x, yc-y, color)
+    #     self.draw_point(xc-x, yc+y, color)
+    #     self.draw_point(xc-x, yc-y, color)
+    #     self.draw_point(xc+y, yc+x, color)
+    #     self.draw_point(xc-y, yc+x, color)
+    #     self.draw_point(xc+y, yc-x, color)
+    #     self.draw_point(xc-y, yc-x, color)
+
+    #     while (x < y):
+    #         x += 1
+    #         if p < 0:
+    #             p = p + 2*x + 1
+    #         else:
+    #             y -= 1
+    #             p = p + 2*(x-y) + 1
+    #         self.draw_point(xc+x, yc+y, color)
+    #         self.draw_point(xc+x, yc-y, color)
+    #         self.draw_point(xc-x, yc+y, color)
+    #         self.draw_point(xc-x, yc-y, color)
+    #         self.draw_point(xc+y, yc+x, color)
+    #         self.draw_point(xc-y, yc+x, color)
+    #         self.draw_point(xc+y, yc-x, color)
+    #         self.draw_point(xc-y, yc-x, color)
+
 
 def draw_circle():
     canvas.delete('all')
@@ -85,10 +150,10 @@ def draw_circle():
 def drawsquare():
     canvas.delete('all')
     setpoints_square()
-    canvas.draw_line(x0, y0, x1, y1, color="blue")
-    canvas.draw_line(x0, y0, y1, x1, color="blue")
-    canvas.draw_line(x1, y0, x1, x1, color="blue")
-    canvas.draw_line(x0, x1, x1, x1, color="blue")
+    canvas.draw_line(x0, y0, x1, y0, color="blue")
+    canvas.draw_line(x0, y1, x1, y1, color="blue")
+    canvas.draw_line(x1, y0, x1, y1, color="blue")
+    canvas.draw_line(x0, y0, x0, y1, color="blue")
 
 
 def draw_triangle():
